@@ -1,6 +1,7 @@
 package test.junit.thejavatest;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -17,7 +18,11 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS) //하나의 클래스 -> 하나의 인스턴스
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class) //테스트 순서 지정
 class StudyTest {
+
+    @RegisterExtension
+    static FindSlowTestExtension findSlowTestExtension = new FindSlowTestExtension(1000L);
 
     @Test
     @DisplayName("스터디 만들기")
