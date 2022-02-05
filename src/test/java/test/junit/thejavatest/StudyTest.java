@@ -100,4 +100,9 @@ class StudyTest {
         System.out.println("Before each");
     }
 
+    @FastTest
+    void create_fast_study() {
+
+    }
+
 }
