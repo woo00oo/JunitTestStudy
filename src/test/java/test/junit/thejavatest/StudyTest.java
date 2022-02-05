@@ -4,7 +4,11 @@ import org.junit.jupiter.api.*;
 
 import java.time.Duration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class StudyTest {
@@ -34,6 +38,41 @@ class StudyTest {
                 () -> assertTrue(study.getLimit() > 0 , "스터디 최대 참석 가능 인원은 0보다 커야 한다.")
         );
     }
+
+    @Test
+    @DisplayName("조건에 따라 테스트 실행하기")
+    void create_new_study2() {
+        String test_env = System.getenv("TEST_ENV");
+        System.out.println("test_env = " + test_env);
+        assumeTrue("LOCAL".equalsIgnoreCase(test_env)); //대소문자를 구분하지 않고 비교
+
+        Study actual = new Study(10);
+        assertThat(actual.getLimit()).isGreaterThan(0);
+    }
+
+    @Test
+    @DisplayName("조건에 따라 테스트 실행하기2")
+    void create_new_study3() {
+        String test_env = System.getenv("TEST_ENV");
+        System.out.println("test_env = " + test_env);
+
+        assumingThat("LOCAL".equalsIgnoreCase(test_env), () -> {
+            Study actual = new Study(10);
+            assertThat(actual.getLimit()).isGreaterThan(0);
+        });
+
+        assumingThat("GLOBAL".equalsIgnoreCase(test_env), () -> {
+            Study actual = new Study(100);
+            assertThat(actual.getLimit()).isGreaterThan(0);
+        });
+    }
+
+    /**
+     * @EnabledOnOs -> 특정 OS
+     * @DisabledOnOs
+     * @EnabledOnJre -> 특정 자바 버전
+     * @EnabledIfEnvironmentVariable -> 특정 환견병수
+     */
 
     @Test
     @Disabled //테스트를 실행하지 않음
