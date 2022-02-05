@@ -2,6 +2,9 @@ package test.junit.thejavatest;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
@@ -13,6 +16,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) //하나의 클래스 -> 하나의 인스턴스
 class StudyTest {
 
     @Test
@@ -118,6 +122,14 @@ class StudyTest {
     @ParameterizedTest(name = "{index} {displayName} message={0}")
     @ValueSource(strings = {"날씨가", "많이", "추워지고", "있습니다"})
     void parameterizedTest(String message) {
+        System.out.println(message);
+    }
+
+    @DisplayName("스터디 만들기")
+    @ParameterizedTest(name = "{index} {displayName} message={0}")
+    @ValueSource(strings = {"날씨가", "많이", "추워지고", "있습니다"})
+    @NullAndEmptySource
+    void parameterizedTest2(String message) {
         System.out.println(message);
     }
 }
