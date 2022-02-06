@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import test.junit.thejavatest.mockito.domain.Member;
 import test.junit.thejavatest.mockito.domain.Study;
+import test.junit.thejavatest.mockito.domain.StudyStatus;
 import test.junit.thejavatest.mockito.member.MemberNotFoundException;
 import test.junit.thejavatest.mockito.member.MemberService;
 
@@ -107,6 +108,26 @@ class StudyServiceTest {
         InOrder inOrder = inOrder(memberService);
         inOrder.verify(memberService).notify(study);
         inOrder.verify(memberService).notify(member);
+    }
+
+    @DisplayName("다른 사용자가 볼 수 있도록 스터디를 공개한다.")
+    @Test
+    void openStudy() {
+        //given
+        StudyService studyService = new StudyService(memberService, studyRepository);
+        Study study = new Study(10, "더자바, 테스트");
+        assertThat(study.getOpenedDateTime()).isNull();
+        given(studyRepository.save(study)).willReturn(study);
+
+        //when
+        studyService.openStudy(study);
+
+        //then
+        assertThat(study.getStatus()).isEqualTo(StudyStatus.OPENED);
+        assertThat(study.getOpenedDateTime()).isNotNull();
+        //memberService.notify 메소드가 호출 되었는지 확인.
+        then(memberService).should().notify(study);
+
     }
 
 }
