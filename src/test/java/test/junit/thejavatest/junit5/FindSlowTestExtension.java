@@ -1,4 +1,4 @@
-package test.junit.thejavatest;
+package test.junit.thejavatest.junit5;
 
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 public class FindSlowTestExtension implements BeforeTestExecutionCallback, AfterTestExecutionCallback {

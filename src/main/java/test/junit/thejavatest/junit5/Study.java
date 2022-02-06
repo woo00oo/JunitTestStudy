@@ -1,4 +1,4 @@
-package test.junit.thejavatest;
+package test.junit.thejavatest.junit5;
 
 public class Study {
 
