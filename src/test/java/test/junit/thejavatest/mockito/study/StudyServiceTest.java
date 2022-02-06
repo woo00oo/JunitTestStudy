@@ -18,6 +18,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,6 +31,14 @@ class StudyServiceTest {
      * - Primitive 타입은 기본 Primitive 값.
      * - 콜렉션은 비어있는 콜렉션.
      * - Void 메소드는 예외를 던지지 않고 아무런 일도 발생하지 않음.
+     */
+
+    /**
+     * Given -> 어떠한 상황이 주어졌을 때
+     *
+     * When -> 어떠한 행동을 하게 되면
+     *
+     * Then -> 어떠한 결과가 주어질 것이다.
      */
 
     @Mock
@@ -63,6 +73,7 @@ class StudyServiceTest {
     @Test
     @DisplayName("Mcok 객체 Stubbing 연습 문제")
     void createNewStudyService() throws MemberNotFoundException {
+        //Given
         StudyService studyService = new StudyService(memberService, studyRepository);
         assertNotNull(studyService);
 
@@ -74,15 +85,24 @@ class StudyServiceTest {
 
         when(memberService.findById(1L)).thenReturn(Optional.of(member));
         when(studyRepository.save(study)).thenReturn(study);
+        //BDD Mockito
+        given(memberService.findById(1L)).willReturn(Optional.of(member));
+        given(studyRepository.save(study)).willReturn(study);
 
+        //When
         studyService.createNewStudy(1L, study);
 
+        //Then
         assertNotNull(study.getOwner());
         assertEquals(member, study.getOwner());
 
         verify(memberService, times(1)).notify(study); //해당 메소드를 실행하였는지, 검증
         verify(memberService, times(1)).notify(member);
         verify(memberService, never()).validate(any());
+
+        //BDD Mockito
+        then(memberService).should(times(1)).notify(study);
+        then(memberService).shouldHaveNoMoreInteractions();
 
         InOrder inOrder = inOrder(memberService);
         inOrder.verify(memberService).notify(study);
