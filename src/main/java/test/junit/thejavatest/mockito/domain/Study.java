@@ -21,8 +21,7 @@ public class Study {
     private LocalDateTime openedDateTime;
     private Member owner;
 
-    public Study(Long id, int limitCount, String name) {
-        this.id = id;
+    public Study(int limitCount, String name) {
         this.limitCount = limitCount;
         this.name = name;
     }
