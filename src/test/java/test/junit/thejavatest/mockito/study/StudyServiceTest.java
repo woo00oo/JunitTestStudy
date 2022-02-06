@@ -1,6 +1,7 @@
 package test.junit.thejavatest.mockito.study;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -56,6 +57,27 @@ class StudyServiceTest {
 
         assertThat(newStudy).isEqualTo(study);
 
+    }
+
+    @Test
+    @DisplayName("Mcok 객체 Stubbing 연습 문제")
+    void createNewStudyService() throws MemberNotFoundException {
+        StudyService studyService = new StudyService(memberService, studyRepository);
+        assertNotNull(studyService);
+
+        Member member = new Member();
+        member.setId(1L);
+        member.setEmail("test@email.com");
+
+        Study study = new Study(10, "테스트");
+
+        when(memberService.findById(1L)).thenReturn(Optional.of(member));
+        when(studyRepository.save(study)).thenReturn(study);
+
+        studyService.createNewStudy(1L, study);
+
+        assertNotNull(study.getOwner());
+        assertEquals(member, study.getOwner());
     }
 
 }
