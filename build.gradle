@@ -23,6 +23,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'junit:junit:4.12'
 	compileOnly 'org.projectlombok:lombok'
+	implementation 'org.kohsuke:github-api:1.300'
+
 	runtimeOnly 'com.h2database:h2'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
