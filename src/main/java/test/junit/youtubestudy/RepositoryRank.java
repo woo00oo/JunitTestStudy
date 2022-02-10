@@ -17,7 +17,7 @@ public class RepositoryRank {
     public int getPoint(String repositoryName) throws IOException {
 
         //GitHub gitHub = GitHub.connect() 기존코드
-        GitHub gitHub = githubService.connect();
+        GitHub gitHub = githubService.connect(); // -> PSA를 사용함으로써 테스트 코드를 작성에 수월하다. 테스트 작성시, GitHubService 구현 클래스 생성.
         GHRepository repository = gitHub.getRepository(repositoryName);
 
         int points = 0;
