@@ -9,7 +9,7 @@ public class TossPaymentService implements PaymentService {
 
     @Override
     public String payment(String reqData) {
-        log.info("토스 매입 진행");
+        log.info("토스 결제 진행");
         return "토스";
     }
 

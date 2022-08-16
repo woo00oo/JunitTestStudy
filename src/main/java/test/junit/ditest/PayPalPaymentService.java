@@ -9,7 +9,7 @@ public class PayPalPaymentService implements PaymentService{
 
     @Override
     public String payment(String reqData) {
-        log.info("페이팔 매입 진행");
+        log.info("페이팔 결제 진행");
         return "페이팔";
     }
 
